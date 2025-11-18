@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post, Delete } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Delete,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 
@@ -16,14 +24,19 @@ export class TasksController {
     return this.tasksService.getRecentTasks();
   }
 
-  @Patch(':id/markdone')
-  markPending(@Param('id') id: string) {
-    return this.tasksService.markPending(Number(id));
+  @Get('all')
+  findAll() {
+    return this.tasksService.getFindAll();
   }
 
-    @Patch(':id/markpending')
-  markDone(@Param('id') id: string) {
+  @Patch('/:id/markdone')
+  markPending(@Param('id') id: string) {
     return this.tasksService.markDone(Number(id));
+  }
+
+  @Patch(':id/markpending')
+  markDone(@Param('id') id: string) {
+    return this.tasksService.markPending(Number(id));
   }
 
   @Delete(':id')

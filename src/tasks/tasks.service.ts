@@ -23,6 +23,12 @@ export class TasksService {
     });
   }
 
+  async getFindAll() {
+    return this.prisma.task.findMany({
+      orderBy: { created_at: 'desc' },
+    });
+  }
+
   async markDone(id: number) {
     return this.prisma.task.update({
       where: { id },
