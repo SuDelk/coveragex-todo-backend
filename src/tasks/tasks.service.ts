@@ -30,9 +30,16 @@ export class TasksService {
     });
   }
 
+  async markPending(id: number) {
+    return this.prisma.task.update({
+      where: { id },
+      data: { completed: false },
+    });
+  }
+
   async deleteTask(id: number) {
-  return this.prisma.task.delete({
-    where: { id },
-  });
-}
+    return this.prisma.task.delete({
+      where: { id },
+    });
+  }
 }

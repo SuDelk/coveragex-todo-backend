@@ -16,7 +16,12 @@ export class TasksController {
     return this.tasksService.getRecentTasks();
   }
 
-  @Patch(':id/done')
+  @Patch(':id/markdone')
+  markPending(@Param('id') id: string) {
+    return this.tasksService.markPending(Number(id));
+  }
+
+    @Patch(':id/markpending')
   markDone(@Param('id') id: string) {
     return this.tasksService.markDone(Number(id));
   }
