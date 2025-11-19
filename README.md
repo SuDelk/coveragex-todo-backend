@@ -82,12 +82,6 @@ The API will be available at `http://localhost:3000`
 
 Create a `.env` file in the root directory with the following variables:
 
-```env
-# Database Configuration
-DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
-DIRECT_URL="postgresql://username:password@localhost:5432/database_name"
-```
-
 **Required Variables:**
 - `DATABASE_URL` - PostgreSQL connection string for Prisma (uses connection pooling)
 - `DIRECT_URL` - Direct PostgreSQL connection string (for migrations)
