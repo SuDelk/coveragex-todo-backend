@@ -177,25 +177,6 @@ model Task {
 }
 ```
 
-### Prisma Commands
-
-```bash
-# Generate Prisma Client
-npx prisma generate
-
-# Create a new migration
-npx prisma migrate dev --name migration_name
-
-# Apply migrations in production
-npx prisma migrate deploy
-
-# Open Prisma Studio (database GUI)
-npx prisma studio
-
-# Reset database (development only)
-npx prisma migrate reset
-```
-
 ## Running Tests
 
 ```bash
