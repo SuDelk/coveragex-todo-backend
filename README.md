@@ -66,12 +66,7 @@ This is a backend service for a task management (Todo) application. It provides 
    npx prisma generate
    ```
 
-5. **Run database migrations**
-   ```bash
-   npx prisma migrate dev
-   ```
-
-6. **Start the development server**
+5. **Start the development server**
    ```bash
    npm run start:dev
    ```
@@ -85,17 +80,14 @@ Create a `.env` file in the root directory with the following variables:
 ```env
 # Database Configuration
 DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
-DIRECT_URL="postgresql://username:password@localhost:5432/database_name"
 ```
 
 **Required Variables:**
-- `DATABASE_URL` - PostgreSQL connection string for Prisma (uses connection pooling)
-- `DIRECT_URL` - Direct PostgreSQL connection string (for migrations)
+- `DATABASE_URL` - PostgreSQL connection string for Prisma
 
 **Example for local development:**
 ```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/todo_db"
-DIRECT_URL="postgresql://postgres:postgres@localhost:5432/todo_db"
 ```
 
 ## API Endpoints
@@ -183,17 +175,8 @@ model Task {
 # Generate Prisma Client
 npx prisma generate
 
-# Create a new migration
-npx prisma migrate dev --name migration_name
-
-# Apply migrations in production
-npx prisma migrate deploy
-
 # Open Prisma Studio (database GUI)
 npx prisma studio
-
-# Reset database (development only)
-npx prisma migrate reset
 ```
 
 ## Running Tests
@@ -257,7 +240,6 @@ docker build -t todo-backend .
 ```bash
 docker run -p 3000:3000 \
   -e DATABASE_URL="your_database_url" \
-  -e DIRECT_URL="your_direct_url" \
   todo-backend
 ```
 
@@ -283,7 +265,7 @@ This application can be deployed to various platforms:
 - **Render**: Deploy with managed PostgreSQL database
 
 **Environment Configuration:**
-Ensure all environment variables are properly configured on your deployment platform, especially `DATABASE_URL` and `DIRECT_URL`.
+Ensure the `DATABASE_URL` environment variable is properly configured on your deployment platform.
 
 ## Contributing
 
