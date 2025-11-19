@@ -1,98 +1,321 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# CoverageX Todo Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A robust and scalable backend API for a Todo application built with NestJS, PostgreSQL, and Prisma ORM. This application provides a RESTful API for managing tasks with full CRUD operations.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Project Description
 
-## Description
+This is a backend service for a task management (Todo) application. It provides endpoints for creating, reading, updating, and deleting tasks. The application is built using modern TypeScript technologies with a focus on type safety, scalability, and maintainability.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Project setup
+- ✅ Create new tasks with title and optional description
+- ✅ Retrieve all tasks or recent pending tasks
+- ✅ Mark tasks as completed or pending
+- ✅ Delete tasks
+- ✅ Input validation using class-validator
+- ✅ CORS enabled for cross-origin requests
+- ✅ Type-safe database operations with Prisma
+- ✅ Comprehensive test coverage
+- ✅ Docker support for containerized deployment
 
-```bash
-$ npm install
+## Tech Stack
+
+### Core Technologies
+- **Node.js** (v20+) - JavaScript runtime
+- **NestJS** (v11) - Progressive Node.js framework
+- **TypeScript** (v5.9) - Type-safe JavaScript
+- **PostgreSQL** - Relational database
+- **Prisma** (v6.19) - Next-generation ORM
+
+### Development Tools
+- **Jest** (v29) - Testing framework
+- **Supertest** (v7) - HTTP assertion library
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **Nodemon** - Development auto-reload
+- **class-validator** - DTO validation
+- **class-transformer** - Object transformation
+
+## Installation & Setup
+
+### Prerequisites
+
+- Node.js (v20 or higher)
+- npm or yarn
+- PostgreSQL database
+
+### Installation Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd coveragex-todo-backend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env` file in the root directory (see Environment Variables section below)
+
+4. **Generate Prisma Client**
+   ```bash
+   npx prisma generate
+   ```
+
+5. **Run database migrations**
+   ```bash
+   npx prisma migrate dev
+   ```
+
+6. **Start the development server**
+   ```bash
+   npm run start:dev
+   ```
+
+The API will be available at `http://localhost:3000`
+
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# Database Configuration
+DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
+DIRECT_URL="postgresql://username:password@localhost:5432/database_name"
 ```
 
-## Compile and run the project
+**Required Variables:**
+- `DATABASE_URL` - PostgreSQL connection string for Prisma (uses connection pooling)
+- `DIRECT_URL` - Direct PostgreSQL connection string (for migrations)
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+**Example for local development:**
+```env
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/todo_db"
+DIRECT_URL="postgresql://postgres:postgres@localhost:5432/todo_db"
 ```
 
-## Run tests
+## API Endpoints
+
+Base URL: `http://localhost:3000`
+
+### Task Endpoints
+
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| `POST` | `/tasks` | Create a new task | `{ "title": string, "description"?: string }` |
+| `GET` | `/tasks` | Get recent pending tasks (last 5) | - |
+| `GET` | `/tasks/all` | Get all tasks | - |
+| `PATCH` | `/tasks/:id/markdone` | Mark a task as completed | - |
+| `PATCH` | `/tasks/:id/markpending` | Mark a task as pending | - |
+| `DELETE` | `/tasks/:id` | Delete a task | - |
+
+### Request/Response Examples
+
+**Create Task**
+```bash
+POST /tasks
+Content-Type: application/json
+
+{
+  "title": "Complete project documentation",
+  "description": "Write comprehensive README and API docs"
+}
+```
+
+**Response:**
+```json
+{
+  "id": 1,
+  "title": "Complete project documentation",
+  "description": "Write comprehensive README and API docs",
+  "completed": false,
+  "created_at": "2025-11-19T16:00:00.000Z"
+}
+```
+
+**Get Recent Tasks**
+```bash
+GET /tasks
+```
+
+**Response:**
+```json
+[
+  {
+    "id": 1,
+    "title": "Complete project documentation",
+    "description": "Write comprehensive README and API docs",
+    "completed": false,
+    "created_at": "2025-11-19T16:00:00.000Z"
+  }
+]
+```
+
+## Database/ORM Details
+
+### Prisma ORM
+
+This project uses **Prisma** as the ORM, which provides:
+- Type-safe database queries
+- Auto-generated TypeScript types
+- Database migration management
+- Intuitive schema definition
+
+### Database Schema
+
+```prisma
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String? 
+  completed   Boolean  @default(false)
+  created_at  DateTime @default(now())
+}
+```
+
+### Prisma Commands
 
 ```bash
-# unit tests
-$ npm run test
+# Generate Prisma Client
+npx prisma generate
 
-# e2e tests
-$ npm run test:e2e
+# Create a new migration
+npx prisma migrate dev --name migration_name
 
-# test coverage
-$ npm run test:cov
+# Apply migrations in production
+npx prisma migrate deploy
+
+# Open Prisma Studio (database GUI)
+npx prisma studio
+
+# Reset database (development only)
+npx prisma migrate reset
+```
+
+## Running Tests
+
+```bash
+# Run unit tests
+npm run test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run tests with coverage
+npm run test:cov
+
+# Run end-to-end tests
+npm run test:e2e
+
+# Run tests in debug mode
+npm run test:debug
+```
+
+## Folder Structure
+
+```
+coveragex-todo-backend/
+├── prisma/
+│   └── schema.prisma          # Database schema definition
+├── src/
+│   ├── tasks/
+│   │   ├── dto/
+│   │   │   └── create-task.dto.ts  # Data transfer objects
+│   │   ├── tasks.controller.ts     # Request handlers
+│   │   ├── tasks.service.ts        # Business logic
+│   │   ├── tasks.service.spec.ts   # Service tests
+│   │   └── tasks.module.ts         # Task module definition
+│   ├── app.controller.ts      # Root controller
+│   ├── app.module.ts          # Root module
+│   └── main.ts                # Application entry point
+├── test/
+│   └── jest-e2e.json          # E2E test configuration
+├── .env                       # Environment variables (not in repo)
+├── .gitignore                 # Git ignore rules
+├── Dockerfile                 # Docker configuration
+├── package.json               # Dependencies and scripts
+├── tsconfig.json              # TypeScript configuration
+└── README.md                  # This file
 ```
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Docker Deployment
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+The project includes a Dockerfile for containerized deployment.
 
+**Build Docker Image:**
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker build -t todo-backend .
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+**Run Docker Container:**
+```bash
+docker run -p 3000:3000 \
+  -e DATABASE_URL="your_database_url" \
+  -e DIRECT_URL="your_direct_url" \
+  todo-backend
+```
 
-## Resources
+### Production Build
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+# Build the application
+npm run build
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Start production server
+npm run start:prod
+```
 
-## Support
+### Deployment Platforms
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+This application can be deployed to various platforms:
 
-## Stay in touch
+- **Heroku**: Deploy using Git push with Heroku PostgreSQL addon
+- **AWS**: Deploy on EC2, ECS, or using AWS RDS for PostgreSQL
+- **DigitalOcean**: Use App Platform or Droplets with managed PostgreSQL
+- **Railway**: Deploy with automatic PostgreSQL provisioning
+- **Vercel**: Deploy with serverless functions and external PostgreSQL
+- **Render**: Deploy with managed PostgreSQL database
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Environment Configuration:**
+Ensure all environment variables are properly configured on your deployment platform, especially `DATABASE_URL` and `DIRECT_URL`.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. **Fork the repository**
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Commit your changes**
+   ```bash
+   git commit -m "Add: your feature description"
+   ```
+4. **Push to your branch**
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. **Open a Pull Request**
+
+### Code Standards
+
+- Follow the existing code style
+- Write tests for new features
+- Run linting before committing: `npm run lint`
+- Format code with Prettier: `npm run format`
+- Ensure all tests pass: `npm run test`
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the **UNLICENSED** license - see the package.json file for details.
+
+---
+
+**Built with ❤️ using NestJS and Prisma**
